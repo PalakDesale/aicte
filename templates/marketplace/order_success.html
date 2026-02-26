@@ -1,0 +1,27 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Order Confirmed - Home Cook Connect{% endblock %}
+
+{% block content %}
+<div class="success-container" style="max-width: 600px; margin: 4rem auto; text-align: center;">
+    <div style="font-size: 4rem; color: #4CAF50; margin-bottom: 1rem;">✓</div>
+    <h1>Order Confirmed!</h1>
+    <p style="font-size: 1.2rem; color: #666; margin: 1rem 0;">Thank you, {{ order.customer_name }}!</p>
+    <p>Your order #{{ order.id }} has been placed successfully.</p>
+    <p>Your order #{{ order.id }} has been placed successfully.</p>
+    <p>We will contact you at {{ order.customer_phone }} to confirm the details.</p>
+
+    <div style="text-align: left; margin-top: 2rem; background: #f9f9f9; padding: 1rem; border-radius: 8px;">
+        <h3>Order Details</h3>
+        <p><strong>Payment Method:</strong> {{ order.get_payment_method_display }}</p>
+        <p><strong>Status:</strong> {{ order.payment_status }}</p>
+        {% if order.special_instructions %}
+        <p><strong>Instructions:</strong> {{ order.special_instructions }}</p>
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 3rem;">
+        <a href="{% url 'home' %}" class="btn">Return to Home</a>
+    </div>
+</div>
+{% endblock %}

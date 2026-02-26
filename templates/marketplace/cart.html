@@ -1,0 +1,65 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Your Cart - Home Cook Connect{% endblock %}
+
+{% block content %}
+<div class="cart-container" style="max-width: 800px; margin: 0 auto;">
+    <h1>Your Cart</h1>
+
+    {% if cart_items %}
+    <table style="width: 100%; border-collapse: collapse; margin-top: 2rem;">
+        <thead>
+            <tr style="border-bottom: 2px solid #eee;">
+                <th style="text-align: left; padding: 1rem;">Dish</th>
+                <th style="text-align: center; padding: 1rem;">Quantity</th>
+                <th style="text-align: right; padding: 1rem;">Price</th>
+                <th style="text-align: right; padding: 1rem;">Subtotal</th>
+                <th style="padding: 1rem;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 1rem;">
+                    <strong>{{ item.dish.title }}</strong><br>
+                    <span style="font-size: 0.9rem; color: #666;">by {{ item.dish.cook.name }}</span>
+                </td>
+                <td style="text-align: center; padding: 1rem;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <a href="{% url 'update_cart' item.dish.id 'remove' %}"
+                            style="display: inline-block; width: 24px; height: 24px; line-height: 24px; background: #eee; border-radius: 50%; text-decoration: none; color: #333; font-weight: bold;">-</a>
+                        <span>{{ item.quantity }}</span>
+                        <a href="{% url 'update_cart' item.dish.id 'add' %}"
+                            style="display: inline-block; width: 24px; height: 24px; line-height: 24px; background: #eee; border-radius: 50%; text-decoration: none; color: #333; font-weight: bold;">+</a>
+                    </div>
+                </td>
+                <td style="text-align: right; padding: 1rem;">₹{{ item.dish.price }}</td>
+                <td style="text-align: right; padding: 1rem;">₹{{ item.subtotal }}</td>
+                <td style="text-align: right; padding: 1rem;">
+                    <a href="{% url 'remove_from_cart' item.dish.id %}"
+                        style="color: red; text-decoration: none;">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" style="text-align: right; padding: 1rem;"><strong>Total:</strong></td>
+                <td style="text-align: right; padding: 1rem;"><strong>₹{{ total_price }}</strong></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 2rem; text-align: right;">
+        <a href="{% url 'explore' %}" class="btn"
+            style="background-color: #eee; color: #333; margin-right: 1rem;">Continue Shopping</a>
+        <a href="{% url 'checkout' %}" class="btn">Proceed to Checkout</a>
+    </div>
+
+    {% else %}
+    <div style="text-align: center; padding: 4rem 0;">
+        <p>Your cart is empty.</p>
+        <a href="{% url 'explore' %}" class="btn" style="margin-top: 1rem;">Start Exploring</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

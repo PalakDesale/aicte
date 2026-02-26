@@ -1,0 +1,54 @@
+{% extends 'marketplace/base.html' %}
+
+{% block content %}
+<div
+    style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <div style="display: flex; gap: 2rem; align-items: start; flex-wrap: wrap;">
+        {% if cook.profile_image %}
+        <img src="{{ cook.profile_image.url }}" alt="{{ cook.name }}"
+            style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+        {% else %}
+        <div
+            style="width: 150px; height: 150px; border-radius: 50%; background: #ddd; display: flex; align-items: center; justify-content: center;">
+            No Photo</div>
+        {% endif %}
+
+        <div>
+            <h1 style="margin-bottom: 0.5rem;">{{ cook.name }}</h1>
+            <p style="color: var(--color-primary); font-weight: bold;">{{ cook.specialty }}</p>
+            <p style="color: #666;">📍 {{ cook.location }}</p>
+            <p style="margin: 1rem 0;">{{ cook.bio }}</p>
+
+            <div style="margin-top: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 4px;">
+                <strong>Contact to Order:</strong> {{ cook.contact_info }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 style="margin-top: 3rem;">Menu</h2>
+<div class="card-grid">
+    {% for dish in dishes %}
+    <div class="card">
+        {% if dish.image %}
+        <img src="{{ dish.image.url }}" alt="{{ dish.title }}">
+        {% else %}
+        <div
+            style="height: 200px; background: #ddd; display: flex; align-items: center; justify-content: center; color: #888;">
+            No Image</div>
+        {% endif %}
+        <div class="card-body">
+            <h3>{{ dish.title }}</h3>
+            <p>{{ dish.description }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <div class="price" style="font-weight: bold; font-size: 1.2rem;">₹{{ dish.price }}</div>
+                <a href="{% url 'add_to_cart' dish.id %}" class="btn"
+                    style="padding: 0.5rem 1rem; font-size: 0.9rem;">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>This cook hasn't listed any dishes yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

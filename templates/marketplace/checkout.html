@@ -1,0 +1,67 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Checkout - Home Cook Connect{% endblock %}
+
+{% block content %}
+<div class="checkout-container" style="max-width: 600px; margin: 0 auto;">
+    <h1>Checkout</h1>
+
+    <form method="post"
+        style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required
+                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required
+                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <textarea id="address" name="address" required rows="3"
+                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="scheduled_time">Requested Time</label>
+            <input type="datetime-local" id="scheduled_time" name="scheduled_time" required
+                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div class="form-group">
+            <label for="servings_count">Number of Servings</label>
+            <input type="number" id="servings_count" name="servings_count" value="1" min="1" required
+                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div class="form-group">
+            <label>Payment Method</label>
+            <div style="margin-top: 0.5rem;">
+                <label style="margin-right: 1.5rem; display: inline-flex; align-items: center;">
+                    <input type="radio" name="payment_method" value="COD" checked style="margin-right: 0.5rem;">
+                    Cash on Delivery
+                </label>
+                <label style="display: inline-flex; align-items: center;">
+                    <input type="radio" name="payment_method" value="Online" style="margin-right: 0.5rem;">
+                    Pay Online (Demo)
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="special_instructions">Special Instructions (Optional)</label>
+            <textarea id="special_instructions" name="special_instructions" rows="2"
+                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;"
+                placeholder="E.g., No spicy, extra sauce, doorbell broken..."></textarea>
+        </div>
+
+        <button type="submit" class="btn" style="margin-top: 1rem;">Place Order</button>
+    </form>
+</div>
+{% endblock %}

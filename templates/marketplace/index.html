@@ -1,0 +1,37 @@
+{% extends 'marketplace/base.html' %}
+
+{% block content %}
+<div class="hero">
+    <h1>Taste the Love of Home Cooking</h1>
+    <p>Find the best local home cooks near you.</p>
+    <a href="{% url 'explore' %}" class="btn" style="margin-top: 1rem;">Explore Dishes</a>
+
+</div>
+
+<section style="margin-top: 4rem;">
+    <h2>Featured Dishes</h2>
+    <div class="card-grid">
+        {% for dish in featured_dishes %}
+        <div class="card">
+            {% if dish.image %}
+            <img src="{{ dish.image.url }}" alt="{{ dish.title }}">
+            {% else %}
+            <div
+                style="height: 200px; background: #ddd; display: flex; align-items: center; justify-content: center; color: #888;">
+                No Image</div>
+            {% endif %}
+            <div class="card-body">
+                <h3>{{ dish.title }}</h3>
+                <p style="color: #666; font-size: 0.9rem;">by {{ dish.cook.name }}</p>
+                <div class="price">₹{{ dish.price }}</div>
+                <a href="{% url 'cook_detail' dish.cook.id %}"
+                    style="display: block; margin-top: 0.5rem; color: var(--color-primary); text-decoration: none;">View
+                    Cook &rarr;</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No dishes available yet. Check back soon!</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
